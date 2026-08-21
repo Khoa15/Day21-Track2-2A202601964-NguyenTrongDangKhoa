@@ -13,8 +13,7 @@ from sklearn.metrics import accuracy_score, f1_score
 # "thu nhap thap" cho moi mau da dat accuracy 0.75 ma khong hoc duoc gi.
 F1_THRESHOLD = 0.65
 
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-mlflow.set_tracking_uri(f"file://{os.path.join(PROJECT_ROOT, 'mlruns')}")
+mlflow.set_tracking_uri(f"file://'mlruns')")
 def train(
     params: dict,
     data_path: str = "data/train_batch1.csv",
