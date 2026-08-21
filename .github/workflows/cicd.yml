@@ -60,6 +60,8 @@ jobs:
         run: |
           echo '${{ secrets.STORAGE_CREDENTIALS }}' > /tmp/sa-key.json
           echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/sa-key.json" >> "$GITHUB_ENV"
+          # Copy cho DVC (credentialpath trong .dvc/config trỏ đến ./sa-key.json)
+          cp /tmp/sa-key.json ./sa-key.json
 
       - name: Pull data with DVC
         run: |
