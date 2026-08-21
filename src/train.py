@@ -12,7 +12,7 @@ from sklearn.metrics import accuracy_score, f1_score
 # Ly do: bo du lieu Adult co ty le lop 75/25. Mot mo hinh doan bua
 # "thu nhap thap" cho moi mau da dat accuracy 0.75 ma khong hoc duoc gi.
 F1_THRESHOLD = 0.65
-
+mlflow.set_tracking_uri("file:./mlruns")
 def train(
     params: dict,
     data_path: str = "data/train_batch1.csv",
