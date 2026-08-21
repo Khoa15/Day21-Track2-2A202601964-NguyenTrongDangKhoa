@@ -55,9 +55,10 @@ def test_report_file_created(tmp_path):
         {"n_estimators": 10, "learning_rate": 0.1, "max_depth": 2},
         data_path=train_path,
         eval_path=eval_path,
+        output_dir=str(tmp_path),
     )
 
-    report_path = "outputs/report.json"
+    report_path = tmp_path / "outputs" / "report.json"
 
     assert os.path.exists(report_path)
 
@@ -76,6 +77,7 @@ def test_model_file_created(tmp_path):
         {"n_estimators": 10, "learning_rate": 0.1, "max_depth": 2},
         data_path=train_path,
         eval_path=eval_path,
+        output_dir=str(tmp_path),
     )
 
-    assert os.path.exists("models/model.joblib")
+    assert os.path.exists(tmp_path / "models" / "model.joblib")

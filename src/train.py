@@ -12,11 +12,18 @@ from sklearn.metrics import accuracy_score, f1_score
 # Ly do: bo du lieu Adult co ty le lop 75/25. Mot mo hinh doan bua
 # "thu nhap thap" cho moi mau da dat accuracy 0.75 ma khong hoc duoc gi.
 F1_THRESHOLD = 0.65
-mlflow.set_tracking_uri("file:./mlruns")
+
+
+def _ensure_tracking_uri():
+    if not os.environ.get("MLFLOW_TRACKING_URI"):
+        mlflow.set_tracking_uri("file:./mlruns")
+
+
 def train(
     params: dict,
     data_path: str = "data/train_batch1.csv",
     eval_path: str = "data/holdout.csv",
+    output_dir: str = ".",
 ) -> float:
     """
     Huan luyen mo hinh va ghi nhan ket qua vao MLflow.
@@ -25,10 +32,12 @@ def train(
         params     : dict chua cac sieu tham so cho GradientBoostingClassifier.
         data_path  : duong dan den file du lieu huan luyen.
         eval_path  : duong dan den file du lieu danh gia (holdout).
+        output_dir : thu muc ghi ket qua (report.json, model.joblib).
 
     Tra ve:
         f1 (float): diem F1 cua lop duong (thu nhap > 50K) tren tap holdout.
     """
+    _ensure_tracking_uri()
 
     df_train = pd.read_csv(data_path)
     df_eval = pd.read_csv(eval_path)
@@ -54,12 +63,14 @@ def train(
 
         print(f"F1: {f1:.4f} | Accuracy: {acc:.4f}")
 
-        os.makedirs("outputs", exist_ok=True)
-        with open("outputs/report.json", "w") as f:
+        report_dir = os.path.join(output_dir, "outputs")
+        model_dir = os.path.join(output_dir, "models")
+        os.makedirs(report_dir, exist_ok=True)
+        with open(os.path.join(report_dir, "report.json"), "w") as f:
             json.dump({"f1_score": f1, "accuracy": acc}, f)
 
-        os.makedirs("models", exist_ok=True)
-        joblib.dump(model, "models/model.joblib")
+        os.makedirs(model_dir, exist_ok=True)
+        joblib.dump(model, os.path.join(model_dir, "model.joblib"))
 
     return f1
 
