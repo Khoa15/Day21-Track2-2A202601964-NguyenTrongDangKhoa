@@ -150,7 +150,7 @@ jobs:
             cd /home/mac
 
             # Cài đúng dependencies trước (đảm bảo sklearn version khớp)
-            pip install -r requirements.txt
+            pip install --force-reinstall -r requirements.txt
 
             # Restart service
             sudo systemctl restart income-api
