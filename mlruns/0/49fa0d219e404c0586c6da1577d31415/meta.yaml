@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mac/Documents/VinUniversity/AI_in_action/Day21-Track2-2A202601964-NguyenTrongDangKhoa/mlruns/0/49fa0d219e404c0586c6da1577d31415/artifacts
+end_time: 1787305105447
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 49fa0d219e404c0586c6da1577d31415
+run_name: rumbling-donkey-238
+run_uuid: 49fa0d219e404c0586c6da1577d31415
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1787305098353
+status: 3
+tags: []
+user_id: mac

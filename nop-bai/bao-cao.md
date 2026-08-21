@@ -13,11 +13,11 @@ HƯỚNG DẪN - đọc rồi XÓA TOÀN BỘ các khối chú thích này sau k
 
 | | |
 |---|---|
-| Họ và tên | ___ |
-| MSSV | ___ |
+| Họ và tên | Nguyễn Trọng Đăng Khoa |
+| MSSV | 2A202601964 |
 | Lớp / Khóa | K4 |
-| Repo GitHub | https://github.com/___/___ |
-| Ngày nộp | ___ |
+| Repo GitHub | https://github.com/Khoa15/Day21-Track2-2A202601964-NguyenTrongDangKhoa |
+| Ngày nộp | 21/08/2026 |
 
 ---
 
@@ -27,13 +27,13 @@ HƯỚNG DẪN - đọc rồi XÓA TOÀN BỘ các khối chú thích này sau k
 
 | Lần chạy | n_estimators | learning_rate | max_depth | f1_score | accuracy |
 |---|---|---|---|---|---|
-| 1 | ___ | ___ | ___ | ___ | ___ |
-| 2 | ___ | ___ | ___ | ___ | ___ |
-| 3 | ___ | ___ | ___ | ___ | ___ |
+| 1 | 50 | 0.05 | 2 | 0.605 | 0.846 |
+| 2 | 100 | 0.1 | 3 | 0.711 | 0.878 |
+| 3 | 200 | 0.2 | 5 | 0.715 | 0.874 |
 
-**Bộ siêu tham số đã chọn:** `n_estimators=___`, `learning_rate=___`, `max_depth=___`.
+**Bộ siêu tham số đã chọn:** `n_estimators=200`, `learning_rate=0.2`, `max_depth=5`.
 
-**Lý do:** ___
+**Lý do:** Vì F1_score của tham số này cao nhất tất cả, accuracy dao động nên tôi không quan tâm về accurracy, có sự đánh đổi như 50 thì 0.05 cho thấy hội tụ nhanh và bị kẹt lại trong vùng hội tụ giúp model có accuracy cao nhưng f1_score không cao. nhưng khi 200 và 0.2 model vẫn hội tụ tốt và thoát được khỏi local gradient nên cả f1 và acc đều cho chỉ số tốt.
 
 <!--
 Trả lời trong phần Lý do:

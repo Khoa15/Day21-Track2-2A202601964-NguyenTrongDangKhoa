@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mac/Documents/VinUniversity/AI_in_action/Day21-Track2-2A202601964-NguyenTrongDangKhoa/mlruns/0/130f8b47c1f04ee7b4b1fedd39171981/artifacts
+end_time: 1787307844409
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 130f8b47c1f04ee7b4b1fedd39171981
+run_name: charming-dog-731
+run_uuid: 130f8b47c1f04ee7b4b1fedd39171981
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1787307837431
+status: 3
+tags: []
+user_id: mac
