@@ -1,16 +1,5 @@
 # Báo Cáo Lab Day 21 - CI/CD cho AI Systems
 
-<!--
-HƯỚNG DẪN - đọc rồi XÓA TOÀN BỘ các khối chú thích này sau khi điền xong:
-
-  - Giới hạn: KHÔNG QUÁ 1 TRANG A4, tương đương khoảng 450 - 550 từ nội dung.
-  - Chỉ điền vào các chỗ ___ và các ô trong bảng. Không thêm mục mới.
-  - Viết bằng câu hoàn chỉnh, không gạch đầu dòng cụt lủn.
-  - Kiểm tra độ dài sau khi đã xóa hết chú thích:
-        wc -w nop-bai/bao-cao.md
-    và xem trước bản in bằng cách mở file trên GitHub rồi Ctrl+P / Cmd+P.
--->
-
 | | |
 |---|---|
 | Họ và tên | Nguyễn Trọng Đăng Khoa |
@@ -23,8 +12,6 @@ HƯỚNG DẪN - đọc rồi XÓA TOÀN BỘ các khối chú thích này sau k
 
 ## 1. Bộ Siêu Tham Số Đã Chọn và Lý Do
 
-<!-- Khoảng 120 - 150 từ. Điền kết quả thật từ MLflow UI ở Bước 1, tối thiểu 3 lần chạy. -->
-
 | Lần chạy | n_estimators | learning_rate | max_depth | f1_score | accuracy |
 |---|---|---|---|---|---|
 | 1 | 50 | 0.05 | 2 | 0.605 | 0.846 |
@@ -33,68 +20,37 @@ HƯỚNG DẪN - đọc rồi XÓA TOÀN BỘ các khối chú thích này sau k
 
 **Bộ siêu tham số đã chọn:** `n_estimators=200`, `learning_rate=0.2`, `max_depth=5`.
 
-**Lý do:** Vì F1_score của tham số này cao nhất tất cả, accuracy dao động nên tôi không quan tâm về accurracy, có sự đánh đổi như 50 thì 0.05 cho thấy hội tụ nhanh và bị kẹt lại trong vùng hội tụ giúp model có accuracy cao nhưng f1_score không cao. nhưng khi 200 và 0.2 model vẫn hội tụ tốt và thoát được khỏi local gradient nên cả f1 và acc đều cho chỉ số tốt.
-
-<!--
-Trả lời trong phần Lý do:
-  - Vì sao bộ này tốt hơn các bộ còn lại (dựa trên f1_score, không phải accuracy)?
-  - Lần chạy có accuracy cao nhất có trùng với lần có f1_score cao nhất không?
-    Nếu không, điều đó nói lên điều gì?
-  - Bạn quan sát thấy đánh đổi nào giữa n_estimators và learning_rate?
--->
+**Lý do:** Lần chạy 3 có F1 score cao nhất (0.715). Lần chạy 2 có accuracy cao hơn (0.878) nhưng F1 thấp hơn (0.711), cho thấy accuracy bị ảnh hưởng bởi class imbalance. Giữa n_estimators và learning_rate có sự đánh đổi: với 200 estimators và learning rate 0.2, model vẫn hội tụ tốt và tránh được local minimum.
 
 ---
 
 ## 2. Vì Sao Ngưỡng Chất Lượng Đặt Trên F1 Chứ Không Phải Accuracy
 
-<!-- Khoảng 120 - 150 từ. -->
-
-___
-
-<!--
-Cần nêu được:
-  - Phân bố lớp của tập dữ liệu (tỷ lệ lớp thu nhập > 50K) và hệ quả của nó.
-  - Accuracy của một mô hình luôn trả lời "thu nhập thấp" là bao nhiêu, vì sao con số
-    đó gây hiểu nhầm.
-  - F1 của lớp dương đo điều gì mà accuracy không đo được.
-  - Vì sao KHÔNG dùng average="weighted" hay average="macro" khi gọi f1_score.
--->
+Bộ dữ liệu Adult có tỷ lệ class imbalance 75/25 (lớp ≤50K chiếm 75%). Một mô hình luôn trả lời "thu nhập thấp" đã đạt accuracy 0.75 mà không học được gì. F1 của lớp dương (thu nhập > 50K) đo khả năng cân bằng giữa precision và recall của lớp thiểu số — điều mà accuracy hoàn toàn bỏ qua. Không dùng average="weighted" hay "macro" vì chúng tính trung bình F1 của cả hai lớp, trong khi ta chỉ quan tâm đến khả năng phát hiện người có thu nhập cao.
 
 ---
 
 ## 3. Khó Khăn Gặp Phải và Cách Giải Quyết
 
-<!-- Nêu 2 - 3 khó khăn thật, mỗi ô một câu ngắn. -->
-
 | Khó khăn | Nguyên nhân | Cách giải quyết |
 |---|---|---|
-| ___ | ___ | ___ |
-| ___ | ___ | ___ |
-| ___ | ___ | ___ |
+| DVC pull lỗi 401 Invalid Credentials | `.dvc/config` có `credentialpath = ../sa-key.json` trỏ đến file không tồn tại trong CI | Copy sa-key.json vào đúng vị trí trong workflow trước khi dvc pull |
+| Service income-api crash trên server | sklearn version mismatch: model train với 1.4.2 nhưng server chạy 1.7.2 | Thêm `pip install --force-reinstall` trong deploy script để đảm bảo đúng version |
 
 ---
 
-## 4. So Sánh Bước 2 và Bước 3 (bắt buộc, 2 - 3 câu)
-
-<!-- Lấy số liệu từ bảng ở mục 3.6 của tasks/buoc-3.md. -->
+## 4. So Sánh Bước 2 và Bước 3
 
 | | f1_score | accuracy |
 |---|---|---|
-| Bước 2 (chỉ `train_batch1`) | ___ | ___ |
-| Bước 3 (thêm `train_batch2`) | ___ | ___ |
+| Bước 2 (chỉ `train_batch1`) | 0.7032 | 0.8700 |
+| Bước 3 (thêm `train_batch2`) | 0.7207 | 0.8760 |
 
-**Nhận xét:** ___
-
-<!--
-Một câu trả lời trung thực kiểu "f1 giảm 0,01 vì dữ liệu mới cùng phân phối, không mang
-thêm thông tin mới" được đánh giá cao hơn kết luận sai rằng thêm dữ liệu luôn tốt hơn.
--->
+**Nhận xét:** Thêm dữ liệu train_batch2 giúp cải thiện F1 (+0.0175) và accuracy (+0.006). Điều này cho thấy dữ liệu mới bổ sung thêm thông tin hữu ích cho model, giúp model học tốt hơn trên cả hai lớp.
 
 ---
 
 ## 5. Phần Bonus Đã Thực Hiện (nếu có)
-
-<!-- Xóa cả mục 5 nếu không làm bonus. Mỗi bonus tối đa 1 dòng. -->
 
 - [ ] Bonus 1 - Tracking MLflow từ xa với DagsHub: ___
 - [ ] Bonus 2 - Điều chỉnh ngưỡng quyết định: ___
