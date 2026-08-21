@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mac/Documents/VinUniversity/AI_in_action/Day21-Track2-2A202601964-NguyenTrongDangKhoa/mlruns/0/ed647c145b5b4697a265a5a1f14d56fc/artifacts
+end_time: 1787308953154
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: ed647c145b5b4697a265a5a1f14d56fc
+run_name: upset-flea-567
+run_uuid: ed647c145b5b4697a265a5a1f14d56fc
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1787308946282
+status: 3
+tags: []
+user_id: mac
